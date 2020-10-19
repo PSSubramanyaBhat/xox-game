@@ -11,6 +11,8 @@ const Square = ({ value, handleClick }) => {
 };
 
 const Board = () => {
+    let end = 0;
+    let [count, setCounter] = useState(0);
     function handleClick(i) {
         const boards = board.slice();
         if (calculateWinner(boards) || boards[i]) {
@@ -20,6 +22,7 @@ const Board = () => {
         // boards[i] = 'X';
         setBoard(boards);
         setTurn(!xnextTurn);
+        setCounter(tic => tic+1);
     }
 
     function calculateWinner(board) {
@@ -50,8 +53,13 @@ const Board = () => {
     let status;
     if (winner) {
         status = 'Winner is ' + winner;
+        end = 1;
     } else {
         status = 'Next player: ' + (xnextTurn ? 'X' : 'O');
+    }
+
+    if (count === 9 && end === 0) {
+        status = 'The Game is a DRAW';
     }
 
     function renderSquare(i) {
