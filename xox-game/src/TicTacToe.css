@@ -16,6 +16,11 @@ body {
   .status {
     margin-bottom: 10px;
   }
+
+  .result {
+    margin-top: 40px;
+    font-size: 25px;
+  }
   
   .square {
     background: #fff;
