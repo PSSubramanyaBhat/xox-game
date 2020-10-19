@@ -32,36 +32,36 @@ const Board = () => {
             [2, 5, 8],
             [0, 4, 8],
             [2, 4, 6],
-          ];
+        ];
 
-          for (let i = 0; i < lines.length; i++) {
+        for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
             if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-              return board[a];
+                return board[a];
             }
-          }
-          return null;
-    }
-
-    function renderSquare(i) {
-
-        const winner = calculateWinner(board);
-        let status;
-        if (winner) {
-            status = 'Winner; ' + winner;
-        } else {
-            status = 'Next player: ' + (xnextTurn ? 'X' : 'O');
         }
-
-        return <Square value={board[i]} handleClick={() => {
-            handleClick(i);
-        }}/>;
+        return null;
     }
 
     const [board, setBoard] = useState(Array(9).fill(null));
     const [xnextTurn, setTurn] = useState(true);
 
-    const status = 'Next player: ' + (xnextTurn ? 'X' : 'O');
+    const winner = calculateWinner(board);
+    let status;
+    if (winner) {
+        status = 'Winner is ' + winner;
+    } else {
+        status = 'Next player: ' + (xnextTurn ? 'X' : 'O');
+    }
+
+    function renderSquare(i) {
+
+        return <Square value={board[i]} handleClick={() => {
+            handleClick(i);
+        }} />;
+    }
+
+    // const status = 'Next player: ' + (xnextTurn ? 'X' : 'O');
 
     return (
         <div>
