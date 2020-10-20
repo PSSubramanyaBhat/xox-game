@@ -45,6 +45,9 @@ const Game = () => {
     const [stepNumber, setStepNumber] = useState(0);
     const [xnextTurn, setTurn] = useState(true);
 
+
+    const [stepCounter, setStepCounter] = useState(0);
+
     function handleClick(i) {
         const gotoPoint = boardHistory.slice(0, stepNumber + 1);
         const current = gotoPoint[stepNumber];
@@ -58,6 +61,7 @@ const Game = () => {
         setStepNumber(gotoPoint.length);
         setTurn(!xnextTurn);
         setCounter(tic => tic + 1);
+        setStepCounter(val=>val+1);
     }
 
     function calculateWinner(board) {
@@ -117,8 +121,31 @@ const Game = () => {
                 <div className="game-board">
                     <Board squares={current} handleClick={i => handleClick(i)} />
                 </div>
-                <ol class="game-info">{renderMoves}</ol>
+                {/* <ol class="game-info">{renderMoves}</ol> */}
             </div>
+            <br></br>
+            <button class="counterButton"
+                onClick={() => {
+                    if (stepCounter > 0) {
+                        setStepCounter(val=>val-1);
+                        jumpTo(stepCounter-1);
+                    }
+                }}
+            >
+            -
+            </button>
+
+            <h1>{stepCounter}</h1>
+            <button class="counterButton"
+                onClick={() => {
+                    if (stepCounter < count) {
+                        setStepCounter(val=>val+1);
+                        jumpTo(stepCounter+1);
+                    }
+                }}
+            >
+            +
+            </button>
         </div>
     );
 };
