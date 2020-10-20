@@ -41,10 +41,26 @@ body {
   }
   
   .game {
-    display: flex;
+    /* display: flex; */
     flex-direction: row;
   }
   
   .game-info {
+    /* margin-left: 20px; */
+    margin-left: -20px;
+  }
+
+  .counterButton {
+    width: 40px;
+    height: 40px;
+    background-color: rgb(35, 199, 35);
+    border-color: rgb(35, 199, 35);
+    color: white;
+    display: inline;
+    border-radius: 10px;
+  }
+  h1 {
+    display: inline;
     margin-left: 20px;
+    margin-right: 20px;
   }

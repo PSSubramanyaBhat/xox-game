@@ -1,5 +1,4 @@
 import './TicTacToe.css';
-
 import React, { useState } from 'react';
 
 const Square = ({ value, handleClick }) => {
@@ -10,19 +9,55 @@ const Square = ({ value, handleClick }) => {
     );
 };
 
-const Board = () => {
+const Board = ({ squares, handleClick }) => {
+
+    function renderSquare(i) {
+        return <Square value={squares[i]} handleClick={() => {
+            handleClick(i);
+        }} />;
+    }
+
+    return (
+        <div>
+            <div className="board-row">
+                {renderSquare(0)}
+                {renderSquare(1)}
+                {renderSquare(2)}
+            </div>
+            <div className="board-row">
+                {renderSquare(3)}
+                {renderSquare(4)}
+                {renderSquare(5)}
+            </div>
+            <div className="board-row">
+                {renderSquare(6)}
+                {renderSquare(7)}
+                {renderSquare(8)}
+            </div>
+        </div>
+    );
+};
+
+const Game = () => {
     let end = 0;
     let [count, setCounter] = useState(0);
+    const [boardHistory, setBoardHistory] = useState([Array(9).fill(null)]);
+    const [stepNumber, setStepNumber] = useState(0);
+    const [xnextTurn, setTurn] = useState(true);
+
     function handleClick(i) {
-        const boards = board.slice();
-        if (calculateWinner(boards) || boards[i]) {
+        const gotoPoint = boardHistory.slice(0, stepNumber + 1);
+        const current = gotoPoint[stepNumber];
+        const squares = [...current];
+
+        if (calculateWinner(squares) || squares[i]) {
             return;
         }
-        boards[i] = xnextTurn ? 'X' : 'O';
-        // boards[i] = 'X';
-        setBoard(boards);
+        squares[i] = xnextTurn ? 'X' : 'O';
+        setBoardHistory([...gotoPoint, squares]);
+        setStepNumber(gotoPoint.length);
         setTurn(!xnextTurn);
-        setCounter(tic => tic+1);
+        setCounter(tic => tic + 1);
     }
 
     function calculateWinner(board) {
@@ -46,10 +81,22 @@ const Board = () => {
         return null;
     }
 
-    const [board, setBoard] = useState(Array(9).fill(null));
-    const [xnextTurn, setTurn] = useState(true);
+    const jumpTo = (step) => {
+        setStepNumber(step);
+        setTurn((step % 2) === 0);
+    };
+    const renderMoves =
+        boardHistory.map((_step, move) => {
+            const destination = move ? "Go to move" + move : "Go to Start";
+            return (
+                <li key={move}>
+                    <button onClick={() => jumpTo(move)}>{destination}</button>
+                </li>
+            );
+        });
 
-    const winner = calculateWinner(board);
+    let current = boardHistory[stepNumber]
+    const winner = calculateWinner(current);
     let status;
     if (winner) {
         status = 'Winner is ' + winner;
@@ -62,50 +109,15 @@ const Board = () => {
         status = 'The Game is a DRAW';
     }
 
-    function renderSquare(i) {
-
-        return <Square value={board[i]} handleClick={() => {
-            handleClick(i);
-        }} />;
-    }
-
-    // const status = 'Next player: ' + (xnextTurn ? 'X' : 'O');
-
     return (
+
         <div>
-            <div className="status">{status}</div>
-            <div className="board-row">
-                {/* {renderSquare(board[0])}
-                {renderSquare(board[1])}
-                {renderSquare(board[2])} */}
-
-                {renderSquare(0)}
-                {renderSquare(1)}
-                {renderSquare(2)}
-            </div>
-            <div className="board-row">
-                {renderSquare(3)}
-                {renderSquare(4)}
-                {renderSquare(5)}
-            </div>
-            <div className="board-row">
-                {renderSquare(6)}
-                {renderSquare(7)}
-                {renderSquare(8)}
-            </div>
-        </div>
-    );
-};
-
-const Game = () => {
-    return (
-        <div className="game">
-            <div className="game-board">
-                <Board />
-            </div>
-            <div className="game-info">
-                <div>{/* status */}</div>
-                <ol>{/* TODO */}</ol>
+            <div className="game">
+                <div className="status">{status}</div>
+                <div className="game-board">
+                    <Board squares={current} handleClick={i => handleClick(i)} />
+                </div>
+                <ol class="game-info">{renderMoves}</ol>
             </div>
         </div>
     );
