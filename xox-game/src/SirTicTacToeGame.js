@@ -98,9 +98,23 @@ const Game = () => {
         }
     }
 
+    const jumpToState = (step) => {
+        setStep(step);
+    };
+
     function renderHistory() {
         return history.map((b, index) => (
-            <li key={index}>{index === 0 ? 'Go to start of the game' : `Goto step${index}`}</li>
+            // <li key={index}>{index === 0 ? 'Go to start of the game' : `Goto step${index}`}</li>
+            
+            <li key={index}>
+                <button class="historyBtn" 
+                    onClick = {() => {
+                        jumpToState(index);
+                    }}
+                >
+                    {index === 0 ? 'Go to start of the game' : `Goto step${index}`}
+                </button>
+            </li>
         ));
     }
 
