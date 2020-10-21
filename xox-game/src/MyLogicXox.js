@@ -81,42 +81,25 @@ const Game = () => {
     }
 
     
-    // function status() {
-    //     const winner = computeWinner(history[step]);
-    //     if (winner) {
-    //         return 'Winner is ' + winner;
-    //     } else if (count === 9 && !winner) {
-    //         return 'The Game is a DRAW';
-    //     } else {
-    //         return `Next player: ${player}`;
-    //     }
-    // }
-
-    const winner = computeWinner(history[step]);
-    let status;
-    if (winner) {
-        status = 'Winner is ' + winner;
-    } else {
-        status = `The Next player: ${player}`;
+    function status() {
+        const winner = computeWinner(history[step]);
+        if (winner) {
+            return 'Winner is ' + winner;
+        } else if (count === 9 && !winner) {
+            return 'The Game is a DRAW';
+        } else {
+            return `Next player: ${player}`;
+        }
     }
-    if (count === 9 && !winner) {
-        status = 'The Game is a DRAW';
-    }
-
-    
-
 
     const jumpToState = (step) => {
         setStep(step);
     };
-
-    // const board = history[step];
-    // console.log(board);
     
     return (
         <div>
             <div className="game">
-                <div className="status">{status}</div>
+                <div className="status">{status()}</div>
                 <div className="game-board">
                     <Board board={history[step]} handleClick={handleClick} />
                 </div>
