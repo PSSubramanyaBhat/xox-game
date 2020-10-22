@@ -50,9 +50,14 @@ body {
     margin-left: -20px;
   }
 
-  .historyBtn:focus {
+  .historyBtn {
     /* background-color: tomato; */
     background-color: rgb(51, 156, 156);
+    color: white;
+  }
+
+  .historyButtonSelected {
+    background-color: red;
     color: white;
   }
 
