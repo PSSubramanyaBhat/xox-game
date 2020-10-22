@@ -44,11 +44,18 @@ const Game = () => {
     const [boardHistory, setBoardHistory] = useState([Array(9).fill(null)]);
     const [stepNumber, setStepNumber] = useState(0);
     const [xnextTurn, setTurn] = useState(true);
+    const [moveCounter, setMoveCounter] =useState(0);
+
 
 
     const [stepCounter, setStepCounter] = useState(0);
 
     function handleClick(i) {
+
+        if (stepCounter !== moveCounter) {
+            return;
+        }
+
         const gotoPoint = boardHistory.slice(0, stepNumber + 1);
         const current = gotoPoint[stepNumber];
         const squares = [...current];
@@ -62,6 +69,7 @@ const Game = () => {
         setTurn(!xnextTurn);
         setCounter(tic => tic + 1);
         setStepCounter(val=>val+1);
+        setMoveCounter((x)=>x+1);
     }
 
     function calculateWinner(board) {
