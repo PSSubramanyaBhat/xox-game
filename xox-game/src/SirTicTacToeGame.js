@@ -44,22 +44,11 @@ const Game = () => {
         //We need to record this interaction in the board state
         //1. The square got fresh tap
         //2. The square already had a value associated, in other words, board[i] had a non null value
+
+        if (step !== moveCounter) {
+            return;
+        }
         
-
-
-        // const canInteract = () => step == history.length;
-        // console.log(step);
-        // console.log(canInteract());
-        // console.log(history.length);
-        // if (!canInteract) {
-        //     return;
-        // }
-        // console.log("Step value")
-        
-
-
-
-
         if (board[i] === null && !computeWinner(board)) {
             //Set board state to a new state depending who is the current player
             //We need to derive the right board for the given step
@@ -68,21 +57,19 @@ const Game = () => {
             //Flip the player
             setPlayer(player === 'X' ? 'O' : 'X');
             //Set the board state
-            console.log(board);
 
-            // [initalboard, step1board]
             const newHistory = history.concat([newBoard]);
-            // const newHistory = history.slice(0, step+1);
             setHistory(newHistory);
-            // setHistory(newHistory.concat(newBoard));
             //Update the step
             setStep((prevStep) => prevStep + 1);
+            setMoveCounter((x) => x + 1);
         }
     };
 
     const [history, setHistory] = useState([Array(9).fill(null)]);
     const [step, setStep] = useState(0);
     const [player, setPlayer] = useState('X');
+    const [moveCounter, setMoveCounter] =useState(0);
 
     function computeWinner(board) {
         const lines = [
@@ -126,7 +113,6 @@ const Game = () => {
         
         return history.map((b, index) => (
             // <li key={index}>{index === 0 ? 'Go to start of the game' : `Goto step${index}`}</li>
-            
             <li key={index}>
                 <button class= {cn('historyBtn',{historyButtonSelected: index===step})}
                     onClick = {() => {
@@ -140,7 +126,6 @@ const Game = () => {
     }
 
     const board = history[step];
-    console.log(board);
     return (
         <div className="game">
             <div className="game-board">
