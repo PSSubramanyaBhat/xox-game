@@ -39,6 +39,7 @@ const Board = ({ board, handleClick }) => {
 };
 
 const Game = () => {
+    let end = 0;
     const handleClick = (i) => {
         console.log(`square ${i} is clicked`);
         //We need to record this interaction in the board state
@@ -48,7 +49,7 @@ const Game = () => {
         if (step !== moveCounter) {
             return;
         }
-        
+
         if (board[i] === null && !computeWinner(board)) {
             //Set board state to a new state depending who is the current player
             //We need to derive the right board for the given step
@@ -63,13 +64,15 @@ const Game = () => {
             //Update the step
             setStep((prevStep) => prevStep + 1);
             setMoveCounter((x) => x + 1);
+            console.log(end);
+            console.log(moveCounter);
         }
     };
 
     const [history, setHistory] = useState([Array(9).fill(null)]);
     const [step, setStep] = useState(0);
     const [player, setPlayer] = useState('X');
-    const [moveCounter, setMoveCounter] =useState(0);
+    const [moveCounter, setMoveCounter] = useState(0);
 
     function computeWinner(board) {
         const lines = [
@@ -99,9 +102,14 @@ const Game = () => {
         const winner = computeWinner(history[step]);
         if (winner === null) {
             return `Next player: ${player}`;
+        } else if (moveCounter === 9 && end === 0) {
+            return 'The Game is a DRAW';
         } else {
+            end = 1;
             return `Player ${winner} won!`;
         }
+
+
     }
 
     const jumpToState = (step) => {
@@ -110,12 +118,12 @@ const Game = () => {
 
     function renderHistory() {
 
-        
+
         return history.map((b, index) => (
             // <li key={index}>{index === 0 ? 'Go to start of the game' : `Goto step${index}`}</li>
             <li key={index}>
-                <button class= {cn('historyBtn',{historyButtonSelected: index===step})}
-                    onClick = {() => {
+                <button class={cn('historyBtn', { historyButtonSelected: index === step })}
+                    onClick={() => {
                         jumpToState(index);
                     }}
                 >
