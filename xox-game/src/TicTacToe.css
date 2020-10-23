@@ -19,6 +19,7 @@ body {
   
   .square {
     background: #fff;
+    /* background: #ff0000; */
     border: 1px solid #999;
     float: left;
     font-size: 24px;
@@ -32,7 +33,39 @@ body {
     width: 60px;
     height: 60px;
   }
-  
+
+  .squareWin {
+    background: #42ee84;
+    border: 1px solid #999;
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+    height: 34px;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 60px;
+    height: 60px;
+  }
+
+  .Result {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    margin-left: 40px;
+    margin-top: 10px;
+  }
+
+  .History {
+    margin-left: -16px;
+  }
+
+  .CentreScreen {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
   .square:focus {
     outline: none;
   }
@@ -48,18 +81,63 @@ body {
   
   .game-info {
     /* margin-left: 20px; */
-    margin-left: -20px;
+    margin-top: 20px;
+    margin-left: 22px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
   }
+
+  .game-board{
+    /* display: flex; */
+    margin-left: 20px;
+  }
+  
 
   .historyBtn {
     /* background-color: tomato; */
     background-color: rgb(51, 156, 156);
     color: white;
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+    border-color: rgb(51, 156, 156);
+    margin-top: 10px;
   }
 
   .historyButtonSelected {
-    background-color: red;
+    background-color: rgb(238, 60, 37);
     color: white;
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+    border-color: rgb(238, 60, 37);
+    margin-top: 10px;
+  }
+
+  .ResetButton {
+    background-color: rgb(238, 60, 37);
+    color: white;
+    width: 100px;
+    height: 35px;
+    border-radius: 10px;
+    border-color: rgb(238, 60, 37);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    margin-left: 20px;
+    margin-top: 15px;
+  }
+
+  .PlayButton {
+    background-color: rgb(10, 161, 161);
+    color: white;
+    width: 100px;
+    height: 35px;
+    border-radius: 10px;
+    border-color: teal;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    margin-left: 20px;
+    margin-top: 15px;
   }
 
   .counterButton {
@@ -71,6 +149,28 @@ body {
     display: inline;
     border-radius: 10px;
   }
+  
+  .PlayerInput {
+    display: flex;
+    margin-bottom: 30px;
+  }
+
+  form {
+    margin-left: 20px;
+  }
+
+  input {
+    height: 25px;
+    width: 100px;
+  }
+
+  input:focus {
+    background-color: rgb(245, 245, 207);
+    border-radius: 5px;
+    border-color: red;
+    font-size: 15px;
+  }
+
   h1 {
     display: inline;
     margin-left: 20px;
