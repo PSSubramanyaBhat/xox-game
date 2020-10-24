@@ -13,6 +13,8 @@ const Square = ({ value, handleClick, className }) => {
         // <button className="square" onClick={handleClick}>
         //     {value}
         // </button>
+
+        // if (index === lines2[i][0] || index === lines2[i][1] || index === lines2[i][2] )
     );
 };
 
