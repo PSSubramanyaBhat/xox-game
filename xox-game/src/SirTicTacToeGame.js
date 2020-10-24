@@ -4,15 +4,15 @@ import React, { useState } from 'react';
 
 import cn from 'classnames';
 
-const Square = ({ value, handleClick, className }) => {
+const Square = ({ value, handleClick, resultBox }) => {
     return (
-        <button id="resultBoard" className={cn('square', { squareWin: false })} onClick={handleClick}>
-            {value}
-        </button>
-
-        // <button className="square" onClick={handleClick}>
+        // <button id="" className={cn('square', { squareWin: false })} onClick={handleClick}>
         //     {value}
         // </button>
+
+        <button id={`index-${resultBox}`} className="square" onClick={handleClick}>
+            {value}
+        </button>
 
         // if (index === lines2[i][0] || index === lines2[i][1] || index === lines2[i][2] )
     );
@@ -20,7 +20,7 @@ const Square = ({ value, handleClick, className }) => {
 
 const Board = ({ board, handleClick }) => {
     function renderSquare(i) {
-        return <Square value={board[i]} handleClick={() => handleClick(i)} />;
+        return <Square resultBox={i} value={board[i]} handleClick={() => handleClick(i)} />;
     }
 
     return (
@@ -112,6 +112,9 @@ const Game = () => {
                 console.log(lines[i][0]);
                 console.log(lines[i][1]);
                 console.log(lines[i][2]);
+
+                // document.getElementById(`index-${lines[i]}`).style.background = "#ff0";
+
                 return board[a];
             }
         }
@@ -141,7 +144,13 @@ const Game = () => {
                 console.log(lines2[i][0]);
                 console.log(lines2[i][1]);
                 console.log(lines2[i][2]);
-                return lines2[i];
+
+                
+                // document.getElementById(`index-${lines2[i][1]}`).style.background = "#42ee84";
+                // document.getElementById(`index-${lines2[i][2]}`).style.background = "#42ee84";
+                
+                // return lines2[i];
+
                 // return (
                 //     <div className="board-row">
                 //         {renderSquare(6)}
@@ -174,6 +183,9 @@ const Game = () => {
 
         if (winner) {
             end = 1;
+            // for (let i = 0; i < winner.board.length; i++) {
+            //     document.getElementById(`index-${winner.board[i]}`).style.background = "#ff0";
+            // }
             return `Player ${winner} won!`;
         } else if (count === 9 && end === 0) {
             return 'Its a DRAW game';

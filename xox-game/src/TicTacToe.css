@@ -50,6 +50,23 @@ body {
     height: 60px;
   }
 
+  /* #index-0,#index-1,#index-2,#index-3,#index-4,
+  #index-5,#index-6,#index-7, #index-8 {
+    background: #42ee84;
+    border: 1px solid #999;
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+    height: 34px;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 60px;
+    height: 60px;
+  } */
+
   .Result {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 20px;
