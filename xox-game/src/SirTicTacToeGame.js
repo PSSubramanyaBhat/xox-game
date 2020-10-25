@@ -63,6 +63,14 @@ const Game = () => {
             //We need to derive the right board for the given step
             const newBoard = [...board]; //Note, we have to create a new state object, and never mutate the current state and set it back. React wont come to know any state change in this case and there will be no re rendering that is going to happen
             newBoard[i] = player;
+
+            for (let j = 0; j < 8; j++) {
+                if (j % 2 === 0) {
+                    document.getElementById(`index-${j}`).style.color = '#eba420'//"#42ee84";
+                } else {
+                    document.getElementById(`index-${j}`).style.color = '#1250c4'//"#42ee84";
+                }
+            }
             //Flip the player
             // setPlayer(player === 'X' ? 'O' : 'X');
             setPlayer(player === player1 ? player2 : player1);
