@@ -118,16 +118,13 @@ const Game = () => {
                 console.log(board);
                 console.log(board.length);
 
+                //highlighting code...
                 for (let j = 0; j < lines[i].length; j++) {
                     document.getElementById(`index-${lines[i][j]}`).style.background = '#80e4a6'//"#42ee84";
                 }
 
-                // document.getElementById(`index-${lines[i][0]}`).style.background = '#80e4a6'//"#42ee84";
-                // document.getElementById(`index-${lines[i][1]}`).style.background = '#80e4a6'//"#42ee84";
-                // document.getElementById(`index-${lines[i][2]}`).style.background = '#80e4a6'//"#42ee84";
-
                 return board[a];
-                // return { 'player': board[a], 'board': [a, b, c] };
+                // return { 'player': board[a], 'board': [a, b, c] };   //another approach...
             }
         }
         return null;
@@ -156,14 +153,6 @@ const Game = () => {
 
         if (winner) {
             end = 1;
-            //highlighting code...
-            // for (let i = 0; i < winner.board.length; i++) {
-            //     document.getElementById(`index-${winner.board[i]}`).style.background = '#80e4a6'//"#42ee84";
-            // }
-
-            // for (let i = 0; i < winner.length; i++) {
-            //     document.getElementById(`index-${winner[i]}`).style.background = '#80e4a6'//"#42ee84";
-            // }
             return `Player ${winner} won!`;
         } else if (count === 9 && end === 0) {
             return 'Its a DRAW game';
@@ -231,6 +220,9 @@ const Game = () => {
                         setCounter(0);
                         setStep(0);
                         setHistory([Array(9).fill(null)]);
+                        for (let i = 0; i < 9; i++) {
+                            document.getElementById(`index-${i}`).style.background = '#fff'//"#42ee84";
+                        }
                     }}
                 >
                     Reset
