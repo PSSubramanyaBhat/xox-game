@@ -35,7 +35,8 @@ body {
   }
 
   .squareWin {
-    background: #42ee84;
+    /* background: #42ee84; */
+    background-color: #80e4a6;
     border: 1px solid #999;
     float: left;
     font-size: 24px;

@@ -114,54 +114,27 @@ const Game = () => {
                 console.log(lines[i][2]);
 
                 // document.getElementById(`index-${lines[i]}`).style.background = "#ff0";
+                console.log(board[a]);
+                console.log(board);
+                console.log(board.length);
+
+                for (let j = 0; j < lines[i].length; j++) {
+                    document.getElementById(`index-${lines[i][j]}`).style.background = '#80e4a6'//"#42ee84";
+                }
+
+                // document.getElementById(`index-${lines[i][0]}`).style.background = '#80e4a6'//"#42ee84";
+                // document.getElementById(`index-${lines[i][1]}`).style.background = '#80e4a6'//"#42ee84";
+                // document.getElementById(`index-${lines[i][2]}`).style.background = '#80e4a6'//"#42ee84";
 
                 return board[a];
+                // return { 'player': board[a], 'board': [a, b, c] };
             }
         }
         return null;
     }
 
 
-    function focusWinnerLine(board) {
-        const lines2 = [
-            [0, 1, 2],
-            [3, 4, 5],
-            [6, 7, 8],
-            [0, 3, 6],
-            [1, 4, 7],
-            [2, 5, 8],
-            [0, 4, 8],
-            [2, 4, 6],
-        ];
-        for (let i = 0; i < lines2.length; i++) {
-            const [a, b, c] = lines2[i];
-            if (board[a] && board[a] === board[b] && board[a] === board[c]) {
 
-
-                console.log(board);
-
-                console.log(lines2[i]);
-                console.log(lines2[i][0]);
-                console.log(lines2[i][1]);
-                console.log(lines2[i][2]);
-
-                
-                // document.getElementById(`index-${lines2[i][1]}`).style.background = "#42ee84";
-                // document.getElementById(`index-${lines2[i][2]}`).style.background = "#42ee84";
-                
-                // return lines2[i];
-
-                // return (
-                //     <div className="board-row">
-                //         {renderSquare(6)}
-                //         {renderSquare(7)}
-                //         {renderSquare(8)}
-                //     </div>
-                // );
-            }
-        }
-        return null;
-    }
 
     function status() {
         //Check if there is a winner, if so, please show the status that there is a winner,
@@ -183,8 +156,13 @@ const Game = () => {
 
         if (winner) {
             end = 1;
+            //highlighting code...
             // for (let i = 0; i < winner.board.length; i++) {
-            //     document.getElementById(`index-${winner.board[i]}`).style.background = "#ff0";
+            //     document.getElementById(`index-${winner.board[i]}`).style.background = '#80e4a6'//"#42ee84";
+            // }
+
+            // for (let i = 0; i < winner.length; i++) {
+            //     document.getElementById(`index-${winner[i]}`).style.background = '#80e4a6'//"#42ee84";
             // }
             return `Player ${winner} won!`;
         } else if (count === 9 && end === 0) {
