@@ -62,7 +62,6 @@ const Game = () => {
             const newBoard = [...board]; //Note, we have to create a new state object, and never mutate the current state and set it back. React wont come to know any state change in this case and there will be no re rendering that is going to happen
             newBoard[i] = player;
 
-
             if (moveCounter % 2 === 0) {
                 document.getElementById(`index-${i}`).style.color = '#eba420'//"#42ee84";
             } else {
