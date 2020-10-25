@@ -68,6 +68,16 @@ body {
     height: 60px;
   } */
 
+  .BoardDisplay {
+    float: left;
+  }
+
+  .StepDisplay {
+    float: left;
+    margin-left: 40px;
+    margin-top: -20px;
+  }
+
   .Result {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 20px;
@@ -115,7 +125,7 @@ body {
     /* background-color: tomato; */
     background-color: rgb(51, 156, 156);
     color: white;
-    width: 200px;
+    width: 150px;
     height: 40px;
     border-radius: 10px;
     border-color: rgb(51, 156, 156);
@@ -125,7 +135,7 @@ body {
   .historyButtonSelected {
     background-color: rgb(238, 60, 37);
     color: white;
-    width: 200px;
+    width: 150px;
     height: 40px;
     border-radius: 10px;
     border-color: rgb(238, 60, 37);

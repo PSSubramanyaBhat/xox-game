@@ -163,6 +163,12 @@ const Game = () => {
 
     const jumpToState = (step) => {
         setStep(step);
+        if (step !== moveCounter) {
+            for (let j = 0; j < 8; j++) {
+                document.getElementById(`index-${j}`).style.background = '#fff'//"#42ee84";
+            }
+        }
+        
     };
 
     function renderHistory() {
@@ -249,13 +255,17 @@ const Game = () => {
                     Play
                 </button>
             </div>
-            <div>
+            <div class="BoardDisplay">
                 <div className="game-board">
                     <Board board={history[step]} handleClick={handleClick} />
                 </div>
+                <div class="Result">{status()}</div>
             </div>
-            <div class="Result">{status()}</div>
-            <ol class="History">{renderHistory()}</ol>
+            <div class="StepDisplay">
+                <ol class="History">{renderHistory()}</ol>
+            </div>
+            {/* <div class="Result">{status()}</div> */}
+            {/* <ol class="History">{renderHistory()}</ol> */}
         </div>
     );
 };
