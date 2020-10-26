@@ -2,34 +2,38 @@ import './TicTacToe.css';
 
 import React, { useState } from 'react';
 import { readFromStorage, writeToStorage } from './LocalStorage';
+import { useLocalStorageState } from './useLocalStorageState';
 
 import cn from 'classnames';
 
-const BOARD_VALUE = 'boardValue';
-const STEP = 'step';
-const MOVE_COUNTER = 'moveCounter';
-const COUNT = 'count';
-const PLAYER1 = 'player1';
-const PLAYER2 = 'player2';
-const CURRENT_PLAYER = 'currentPlayer';
+// const BOARD_VALUE = 'boardValue';
+// const STEP = 'step';
+// const MOVE_COUNTER = 'moveCounter';
+// const COUNT = 'count';
+// const PLAYER1 = 'player1';
+// const PLAYER2 = 'player2';
+// const CURRENT_PLAYER = 'currentPlayer';
 
-const Square = ({ value, handleClick, resultBox }) => {
+const Square = ({ value, handleClick, resultBox, toHighlight}) => {
+
+    const classNameValue = cn("square", {squareWin: toHighlight});
     return (
         // <button id="" className={cn('square', { squareWin: false })} onClick={handleClick}>
         //     {value}
         // </button>
 
-        <button id={`index-${resultBox}`} className="square" onClick={handleClick}>
+        <button id={`index-${resultBox}`} className={classNameValue} onClick={handleClick}>
             {value}
         </button>
-
-        // if (index === lines2[i][0] || index === lines2[i][1] || index === lines2[i][2] )
     );
 };
 
-const Board = ({ board, handleClick }) => {
+const Board = ({ board, handleClick, winningLineCondition }) => {
     function renderSquare(i) {
-        return <Square resultBox={i} value={board[i]} handleClick={() => handleClick(i)} />;
+        return <Square resultBox={i} value={board[i]} handleClick={() => handleClick(i)} 
+        toHighlight={ winningLineCondition && winningLineCondition.includes(i)}
+
+        />;
     }
 
     return (
@@ -54,7 +58,7 @@ const Board = ({ board, handleClick }) => {
 };
 
 const Game = () => {
-    let end = 0;
+    // let end = 0;
     const handleClick = (i) => {
         console.log(`square ${i} is clicked`);
         //We need to record this interaction in the board state
@@ -65,17 +69,17 @@ const Game = () => {
             return;
         }
 
-        if (board[i] === null && !computeWinner(board)) {
+        if (board[i] === null && winner === null) {
             //Set board state to a new state depending who is the current player
             //We need to derive the right board for the given step
             const newBoard = [...board]; //Note, we have to create a new state object, and never mutate the current state and set it back. React wont come to know any state change in this case and there will be no re rendering that is going to happen
             newBoard[i] = player;
 
-            if (moveCounter % 2 === 0) {
-                document.getElementById(`index-${i}`).style.color = '#eba420'//"#42ee84";
-            } else {
-                document.getElementById(`index-${i}`).style.color = '#1250c4'//"#42ee84";
-            }
+            // if (moveCounter % 2 === 0) {
+            //     document.getElementById(`index-${i}`).style.color = '#eba420'//"#42ee84";
+            // } else {
+            //     document.getElementById(`index-${i}`).style.color = '#1250c4'//"#42ee84";
+            // }
 
 
 
@@ -94,16 +98,10 @@ const Game = () => {
             setMoveCounter((x) => x + 1);
             setCounter(tic => tic + 1);
 
-            // writeToStorage(BOARD_VALUE, history);
-            // writeToStorage(STEP, history);
-            // writeToStorage(MOVE_COUNTER, moveCounter);
-            // writeToStorage(COUNT, count);
-            // writeToStorage(PLAYER1, player1);
-            // writeToStorage(PLAYER2, player2);
-            // writeToStorage(CURRENT_PLAYER, player);
         }
     };
 
+    
     const [history, setHistory] = useState([Array(9).fill(null)]);   //PERFECTLY WORKING SNIPPET......
     const [step, setStep] = useState(0);
     
@@ -113,18 +111,9 @@ const Game = () => {
     const [player1, setIcon1] = useState('X');
     const [player2, setIcon2] = useState('O');
     const [player, setPlayer] = useState(player1);     //PERFECTLY WORKING SNIPPET......
+    const board = history[step];
+    const winningPlayer = computeWinner(board);
 
-
-
-    // const [history, setHistory] = useState(() => readFromStorage(BOARD_VALUE) || [Array(9).fill(null)]);
-    // const [step, setStep] = useState(() => readFromStorage(STEP) || 0);//useState(0);
-    // const [moveCounter, setMoveCounter] = useState(() => readFromStorage(MOVE_COUNTER) || 0);//useState(0);
-    // const [count, setCounter] = useState(() => readFromStorage(COUNT) || 0);//useState(0);
-    // const [player1, setIcon1] = useState(() => readFromStorage(PLAYER1) || 'X');//useState('X');
-    // const [player2, setIcon2] = useState(() => readFromStorage(PLAYER2) || 'O');//useState('O');
-    // const [player, setPlayer] = useState(() => readFromStorage(CURRENT_PLAYER) || player1);//useState(player1);
-
-    
     function computeWinner(board) {
         const lines = [
             [0, 1, 2],
@@ -139,60 +128,39 @@ const Game = () => {
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
             if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-                // console.log("venbkbb");
-                
-                // console.log(a);
-                // console.log(b);
-                // console.log(c);
-                console.log(board);
-                // console.log(board[a]);
-                console.log(lines[i]);
-                console.log(lines[i][0]);
-                console.log(lines[i][1]);
-                console.log(lines[i][2]);
 
-                // document.getElementById(`index-${lines[i]}`).style.background = "#ff0";
-                console.log(board[a]);
-                console.log(board);
-                console.log(board.length);
+                // //highlighting code...
+                // for (let j = 0; j < lines[i].length; j++) {
+                //     document.getElementById(`index-${lines[i][j]}`).style.background = '#80e4a6'//"#42ee84";
+                // }
 
-                //highlighting code...
-                for (let j = 0; j < lines[i].length; j++) {
-                    document.getElementById(`index-${lines[i][j]}`).style.background = '#80e4a6'//"#42ee84";
-                }
+                // return board[a];
 
-                return board[a];
-                // return { 'player': board[a], 'board': [a, b, c] };   //another approach...
+                return { 
+                    winner: board[a], 
+                    winningLine: lines[i] 
+                };   //another approach...
             }
         }
-        return null;
+        // return null;
+        return { 
+            winner: null, 
+            winningLine: null, 
+        };  
     }
 
 
 
 
+    // const winningPlayer = computeWinner(board);
+    const winner = winningPlayer.winner;
     function status() {
-        //Check if there is a winner, if so, please show the status that there is a winner,
-        //and game should end.
-        //We can actually derive if there is a winner. We dont need to maintain a seperate state
-        //for this.
+        // const winner = computeWinner(history[step]);
 
-        const winner = computeWinner(history[step]);
-        /*
-        if (winner === null) {
-            return `Next player: ${player}`;
-        } else if (moveCounter === 9 && end === 0) {
-            return 'The Game is a DRAW';
-        } else {
-            end = 1;
-            return `Player ${winner} won!`;
-        }
-        */
-
+        // try using step instead of count to reduce number of hooks...
         if (winner) {
-            end = 1;
             return `Player ${winner} won!`;
-        } else if (count === 9 && end === 0) {
+        } else if (count === 9 && winner === null) {
             return 'Its a DRAW game';
         } else {
             return `Next player: ${player}`;
@@ -201,11 +169,11 @@ const Game = () => {
 
     const jumpToState = (step) => {
         setStep(step);
-        if (step !== moveCounter) {
-            for (let j = 0; j < 9; j++) {
-                document.getElementById(`index-${j}`).style.background = '#fff'//"#42ee84";
-            }
-        }
+        // if (step !== moveCounter) {
+        //     for (let j = 0; j < 9; j++) {
+        //         document.getElementById(`index-${j}`).style.background = '#fff'//"#42ee84";
+        //     }
+        // }
 
     };
 
@@ -224,7 +192,7 @@ const Game = () => {
         ));
     }
 
-    const board = history[step];
+    // const board = history[step];
     return (
         <div className="game">
             <div class="PlayerInput">
@@ -255,7 +223,7 @@ const Game = () => {
                 </form>
                 <button class="ResetButton"
                     onClick={() => {
-                        end = 0;
+                        // end = 0;
                         document.getElementById("symbol1").value = '';
                         document.getElementById("symbol2").value = '';
                         setIcon1('X');
@@ -266,17 +234,9 @@ const Game = () => {
                         setStep(0);
                         setHistory([Array(9).fill(null)]);
 
-                        // writeToStorage(BOARD_VALUE, history);
-                        // writeToStorage(STEP, history);
-                        // writeToStorage(MOVE_COUNTER, moveCounter);
-                        // writeToStorage(COUNT, count);
-                        // writeToStorage(PLAYER1, player1);
-                        // writeToStorage(PLAYER2, player2);
-                        // writeToStorage(CURRENT_PLAYER, player);
-
-                        for (let i = 0; i < 9; i++) {
-                            document.getElementById(`index-${i}`).style.background = '#fff'//"#42ee84";
-                        }
+                        // for (let i = 0; i < 9; i++) {
+                        //     document.getElementById(`index-${i}`).style.background = '#fff'//"#42ee84";
+                        // }
                     }}
                 >
                     Reset
@@ -314,7 +274,7 @@ const Game = () => {
             </div>
             <div class="BoardDisplay">
                 <div className="game-board">
-                    <Board board={history[step]} handleClick={handleClick} />
+                    <Board board={history[step]} handleClick={handleClick} winningLineCondition={winningPlayer.winningLine}/>
                 </div>
                 <div class="Result">{status()}</div>
             </div>
