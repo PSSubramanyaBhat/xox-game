@@ -6,13 +6,13 @@ import { useLocalStorageState } from './useLocalStorageState';
 
 import cn from 'classnames';
 
-// const BOARD_VALUE = 'boardValue';
-// const STEP = 'step';
-// const MOVE_COUNTER = 'moveCounter';
+const BOARD_VALUE = 'boardValue';
+const STEP = 'step';
+const MOVE_COUNTER = 'moveCounter';
 // const COUNT = 'count';
 // const PLAYER1 = 'player1';
 // const PLAYER2 = 'player2';
-// const CURRENT_PLAYER = 'currentPlayer';
+const CURRENT_PLAYER = 'currentPlayer';
 
 const Square = ({ value, handleClick, resultBox, toHighlight}) => {
 
@@ -87,30 +87,53 @@ const Game = () => {
 
             //Flip the player
             // setPlayer(player === 'X' ? 'O' : 'X');
-            setPlayer(player === player1 ? player2 : player1);
-            //Set the board state
 
+            setPlayer(player === player1 ? player2 : player1);
+            let nextPlayer = player === player1 ? player2 : player1;
+            writeToStorage(CURRENT_PLAYER,nextPlayer);
+            // writeToStorage(CURRENT_PLAYER,player);  //why not??????
+
+            //Set the board state
             const newHistory = history.concat([newBoard]);
             setHistory(newHistory);
 
+            // writeToStorage(BOARD_VALUE,history);  //why not??????
+            writeToStorage(BOARD_VALUE,newHistory);
+
             //Update the step
             setStep((prevStep) => prevStep + 1);
+            // writeToStorage(STEP, step);  //why not??????
+            writeToStorage(STEP, step+1);
+            
             setMoveCounter((x) => x + 1);
+            // writeToStorage(MOVE_COUNTER, moveCounter);  //why not??????
+            writeToStorage(MOVE_COUNTER, moveCounter+1);
+
             setCounter(tic => tic + 1);
 
         }
     };
 
     
+
+    const [history, setHistory] = useState(()=>readFromStorage(BOARD_VALUE)||[Array(9).fill(null)]);
+    const [step, setStep] = useState(()=>readFromStorage(STEP)||0);
+    const [moveCounter, setMoveCounter] = useState(()=>readFromStorage(MOVE_COUNTER)||0);
+
+    /*
     const [history, setHistory] = useState([Array(9).fill(null)]);   //PERFECTLY WORKING SNIPPET......
     const [step, setStep] = useState(0);
-    
-    const [moveCounter, setMoveCounter] = useState(0);
+    const [moveCounter, setMoveCounter] = useState(0);  */
+
+
     const [count, setCounter] = useState(0);
 
     const [player1, setIcon1] = useState('X');
     const [player2, setIcon2] = useState('O');
-    const [player, setPlayer] = useState(player1);     //PERFECTLY WORKING SNIPPET......
+
+    const [player, setPlayer] = useState(()=>readFromStorage(CURRENT_PLAYER)||player1);   //PERFECTLY WORKING SNIPPET......
+
+    // const [player, setPlayer] = useState(player1);     //PERFECTLY WORKING SNIPPET......
     const board = history[step];
     const winningPlayer = computeWinner(board);
 
@@ -223,7 +246,6 @@ const Game = () => {
                 </form>
                 <button class="ResetButton"
                     onClick={() => {
-                        // end = 0;
                         document.getElementById("symbol1").value = '';
                         document.getElementById("symbol2").value = '';
                         setIcon1('X');
@@ -281,8 +303,6 @@ const Game = () => {
             <div class="StepDisplay">
                 <ol class="History">{renderHistory()}</ol>
             </div>
-            {/* <div class="Result">{status()}</div> */}
-            {/* <ol class="History">{renderHistory()}</ol> */}
         </div>
     );
 };
