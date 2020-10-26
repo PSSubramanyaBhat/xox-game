@@ -1,8 +1,17 @@
 import './TicTacToe.css';
 
 import React, { useState } from 'react';
+import { readFromStorage, writeToStorage } from './LocalStorage';
 
 import cn from 'classnames';
+
+const BOARD_VALUE = 'boardValue';
+const STEP = 'step';
+const MOVE_COUNTER = 'moveCounter';
+const COUNT = 'count';
+const PLAYER1 = 'player1';
+const PLAYER2 = 'player2';
+const CURRENT_PLAYER = 'currentPlayer';
 
 const Square = ({ value, handleClick, resultBox }) => {
     return (
@@ -68,7 +77,7 @@ const Game = () => {
                 document.getElementById(`index-${i}`).style.color = '#1250c4'//"#42ee84";
             }
 
-            
+
 
 
 
@@ -79,14 +88,23 @@ const Game = () => {
 
             const newHistory = history.concat([newBoard]);
             setHistory(newHistory);
+
             //Update the step
             setStep((prevStep) => prevStep + 1);
             setMoveCounter((x) => x + 1);
             setCounter(tic => tic + 1);
+
+            // writeToStorage(BOARD_VALUE, history);
+            // writeToStorage(STEP, history);
+            // writeToStorage(MOVE_COUNTER, moveCounter);
+            // writeToStorage(COUNT, count);
+            // writeToStorage(PLAYER1, player1);
+            // writeToStorage(PLAYER2, player2);
+            // writeToStorage(CURRENT_PLAYER, player);
         }
     };
 
-    const [history, setHistory] = useState([Array(9).fill(null)]);
+    const [history, setHistory] = useState([Array(9).fill(null)]);   //PERFECTLY WORKING SNIPPET......
     const [step, setStep] = useState(0);
     
     const [moveCounter, setMoveCounter] = useState(0);
@@ -94,8 +112,19 @@ const Game = () => {
 
     const [player1, setIcon1] = useState('X');
     const [player2, setIcon2] = useState('O');
-    const [player, setPlayer] = useState(player1);
+    const [player, setPlayer] = useState(player1);     //PERFECTLY WORKING SNIPPET......
 
+
+
+    // const [history, setHistory] = useState(() => readFromStorage(BOARD_VALUE) || [Array(9).fill(null)]);
+    // const [step, setStep] = useState(() => readFromStorage(STEP) || 0);//useState(0);
+    // const [moveCounter, setMoveCounter] = useState(() => readFromStorage(MOVE_COUNTER) || 0);//useState(0);
+    // const [count, setCounter] = useState(() => readFromStorage(COUNT) || 0);//useState(0);
+    // const [player1, setIcon1] = useState(() => readFromStorage(PLAYER1) || 'X');//useState('X');
+    // const [player2, setIcon2] = useState(() => readFromStorage(PLAYER2) || 'O');//useState('O');
+    // const [player, setPlayer] = useState(() => readFromStorage(CURRENT_PLAYER) || player1);//useState(player1);
+
+    
     function computeWinner(board) {
         const lines = [
             [0, 1, 2],
@@ -110,7 +139,8 @@ const Game = () => {
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
             if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-                console.log("venbkbb");
+                // console.log("venbkbb");
+                
                 // console.log(a);
                 // console.log(b);
                 // console.log(c);
@@ -176,7 +206,7 @@ const Game = () => {
                 document.getElementById(`index-${j}`).style.background = '#fff'//"#42ee84";
             }
         }
-        
+
     };
 
     function renderHistory() {
@@ -235,6 +265,15 @@ const Game = () => {
                         setCounter(0);
                         setStep(0);
                         setHistory([Array(9).fill(null)]);
+
+                        // writeToStorage(BOARD_VALUE, history);
+                        // writeToStorage(STEP, history);
+                        // writeToStorage(MOVE_COUNTER, moveCounter);
+                        // writeToStorage(COUNT, count);
+                        // writeToStorage(PLAYER1, player1);
+                        // writeToStorage(PLAYER2, player2);
+                        // writeToStorage(CURRENT_PLAYER, player);
+
                         for (let i = 0; i < 9; i++) {
                             document.getElementById(`index-${i}`).style.background = '#fff'//"#42ee84";
                         }
@@ -246,6 +285,9 @@ const Game = () => {
                     onClick={() => {
                         let len1 = document.getElementById("symbol1").value.length;
                         let len2 = document.getElementById("symbol2").value.length;
+
+                        let name1 = document.getElementById("symbol1").value;
+                        let name2 = document.getElementById("symbol2").value;
                         if (len1 === 1 && len2 === 1) {
                             setIcon1(document.getElementById("symbol1").value); //Want to resolve thte issue of using this statement twice...
                             setPlayer(player1);
@@ -255,6 +297,12 @@ const Game = () => {
                             setPlayer(player1);
                         } else {
                             alert("Enter a single character");
+                            document.getElementById("symbol1").value = '';
+                            document.getElementById("symbol2").value = '';
+                        }
+
+                        if (name1 === name2) {
+                            alert("2 players cant have same name");
                             document.getElementById("symbol1").value = '';
                             document.getElementById("symbol2").value = '';
                         }
