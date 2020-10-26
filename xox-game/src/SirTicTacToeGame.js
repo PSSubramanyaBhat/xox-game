@@ -88,13 +88,12 @@ const Game = () => {
 
     const [history, setHistory] = useState([Array(9).fill(null)]);
     const [step, setStep] = useState(0);
-    // const [player, setPlayer] = useState('X');
+    
     const [moveCounter, setMoveCounter] = useState(0);
     const [count, setCounter] = useState(0);
+
     const [player1, setIcon1] = useState('X');
     const [player2, setIcon2] = useState('O');
-    // const [player1, setIcon1] = useState(document.getElementById("symbol1").value);
-    // const [player2, setIcon2] = useState(document.getElementById("symbol2").value);
     const [player, setPlayer] = useState(player1);
 
     function computeWinner(board) {
@@ -173,7 +172,7 @@ const Game = () => {
     const jumpToState = (step) => {
         setStep(step);
         if (step !== moveCounter) {
-            for (let j = 0; j < 8; j++) {
+            for (let j = 0; j < 9; j++) {
                 document.getElementById(`index-${j}`).style.background = '#fff'//"#42ee84";
             }
         }
@@ -205,6 +204,7 @@ const Game = () => {
                     <input id="symbol1" placeholder="X"
                         onChange={(event) => {
                             setIcon1(event.target.value);
+                            // setPlayer(event.target.value);  // working....
                             setPlayer(player1);
                         }}
                     >
