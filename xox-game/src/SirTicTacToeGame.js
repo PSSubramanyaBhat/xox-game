@@ -75,11 +75,11 @@ const Game = () => {
             const newBoard = [...board]; //Note, we have to create a new state object, and never mutate the current state and set it back. React wont come to know any state change in this case and there will be no re rendering that is going to happen
             newBoard[i] = player;
 
-            // if (moveCounter % 2 === 0) {
-            //     document.getElementById(`index-${i}`).style.color = '#eba420'//"#42ee84";
-            // } else {
-            //     document.getElementById(`index-${i}`).style.color = '#1250c4'//"#42ee84";
-            // }
+            if (moveCounter % 2 === 0) {
+                document.getElementById(`index-${i}`).style.color = '#eba420'//"#42ee84";
+            } else {
+                document.getElementById(`index-${i}`).style.color = '#1250c4'//"#42ee84";
+            }
 
 
 
@@ -283,7 +283,13 @@ const Game = () => {
                             document.getElementById("symbol2").value = '';
                         }
 
-                        if (name1 === name2) {
+                        // if (name1 === name2) {
+                        //     alert("2 players cant have same name");
+                        //     document.getElementById("symbol1").value = '';
+                        //     document.getElementById("symbol2").value = '';
+                        // }
+
+                        if ((name1 !== '' && name2 !== '') && name1 === name2) {
                             alert("2 players cant have same name");
                             document.getElementById("symbol1").value = '';
                             document.getElementById("symbol2").value = '';
@@ -308,3 +314,18 @@ const Game = () => {
 };
 
 export default Game;
+
+
+
+// TASKS Pending......
+/*
+1.) Color X and O respectively keeping Local storage in mind as well...
+2.) For Input Symbols use useEffect like sir...
+3.) History stores, but if u give new user icon and refresh then it will reset to X and O...
+    So we gotta write write and Read from Local Storage for each of player1 and 2
+4.) Delete and reduce unnecessary code snippets
+5.) Learn and useReduce to do the same problem
+6.) learn back useState, useEffect and useRef and prepare for Objects concepts and custom Tags + React fxns (Modern react concepts) ,
+    custom Hooks etc.
+7.) Dont accept null inputs.
+*/
