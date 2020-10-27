@@ -53,6 +53,11 @@ const Game = () => {
         setStep,
         player,
         setPlayer,
+        player1,
+        player2,
+        setIcons1,
+        setIcons2,
+        alertMessage,
         resetGame,
         computeWinner,
         processCurrentStepAtIndex,
@@ -108,9 +113,35 @@ const Game = () => {
             <div class="PlayerInput">
                 <div className="name-inputs">
                     <label>P1: </label>
-                    <input ref={firstPlayerNameFieldRef} type={'text'} onChange={() => { }} placeholder={'X'} />
+                    <input ref={firstPlayerNameFieldRef} type={'text'}
+                        onChange={(event) => {
+                            if (event.target.value!=='' && event.target.value.length === 1) {
+                                setIcons1(event.target.value);
+                                setPlayer(event.target.value);
+                            } 
+                            // else if (alertMessage) {
+                            //     alert("Both players can't have same value");
+                            // } 
+                            else {
+                                alert("Enter a single character");
+                            }
+                            
+                        }}
+                        placeholder={'X'} />
                     <label>P2: </label>
-                    <input type={'text'} onChange={() => { }} placeholder={'Y'} />
+                    <input type={'text'}
+                        onChange={(event) => {
+                            if (event.target.value!=='' && event.target.value.length === 1) {
+                                setIcons2(event.target.value);
+                            } 
+                            // else if (alertMessage) {
+                            //     alert("Both players can't have same value");
+                            // } 
+                            else {
+                                alert("Enter a single character");
+                            }
+                        }}
+                        placeholder={'O'} />
                 </div>
                 <div class="leftPad">
                     <Button
@@ -138,3 +169,5 @@ const Game = () => {
 };
 
 export default Game;
+
+// Write condition for input,  for 2 inputs being same, then dont allow...

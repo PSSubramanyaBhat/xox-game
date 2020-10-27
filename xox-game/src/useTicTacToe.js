@@ -5,12 +5,27 @@ import { useLocalStorageState } from './useLocalStorageState';
 function useTicTacToe() {
     const [history, setHistory] = useLocalStorageState([Array(9).fill(null)], 'history');
     const [step, setStep] = useLocalStorageState(0, 'step');
-    const [player, setPlayer] = useLocalStorageState('X', 'currentPlayer');
+    const [player1, setIcons1] = useLocalStorageState('X', 'player1');
+    const [player2, setIcons2] = useLocalStorageState('O', 'player2');
+    const [player, setPlayer] = useLocalStorageState(player1, 'currentPlayer');
+
+    // function setPlayerIcons() {
+
+    // }
 
     function resetGame() {
         setHistory([Array(9).fill(null)]);
         setStep(0);
-        setPlayer('X');
+        setPlayer(player1);
+        // setPlayer('X');
+    }
+    
+    function alertMessage() {
+        setIcons1(player1);
+        setIcons2(player2);
+        if (player1 === player2) {
+            alert("Both players can't have same value");
+        }
     }
 
     function computeWinner(board) {
@@ -43,7 +58,8 @@ function useTicTacToe() {
             const newBoard = [...board]; //Note, we have to create a new state object, and never mutate the current state and set it back. React wont come to know any state change in this case and there will be no re rendering that is going to happen
             newBoard[i] = player;
             //Flip the player
-            setPlayer(player === 'X' ? 'O' : 'X');
+            // setPlayer(player === 'X' ? 'O' : 'X');
+            setPlayer(player === player1 ? player2 : player1);
             //Set the board state
 
             // [initalboard, step1board]
@@ -61,6 +77,11 @@ function useTicTacToe() {
         setHistory,
         setStep,
         setPlayer,
+        player1,
+        player2,
+        setIcons1,
+        setIcons2,
+        alertMessage,
         resetGame,
         computeWinner,
         processCurrentStepAtIndex,
